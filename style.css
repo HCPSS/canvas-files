@@ -1007,3 +1007,6 @@ figcaption {
   display: table-caption;
   caption-side: bottom;
 }
+
+/* Privacy Solution - Removed Observer Activity */
+tr.ObserverEnrollment :nth-of-type(8) div { display: none; }

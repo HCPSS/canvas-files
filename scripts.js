@@ -599,7 +599,25 @@ $(document).ready(function() {
 
 
 	}, 500);
-
+			
+	// Role DOM Support
+	if(typeof(ENV) !== 'undefined'){ 
+				
+		// alert(JSON.stringify(ENV.current_user_roles));
+		// alert(JSON.stringify(ENV.current_user_roles));
+		
+		// Add Role Classes To Body
+		$.each(ENV.current_user_roles, function(i,e){
+			$("body").addClass("role-"+e);
+		});
+		
+		// Hide Access Log
+		if( (ENV.current_user_roles.indexOf('admin')) == -1 ){		
+			$(".button-sidebar-wide .icon-clock").parent().hide();
+		} 
+		
+	}
+	
 });
 
 /* Get subdomain - this is used so we can target specific code to test/beta/live */

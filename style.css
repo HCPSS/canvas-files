@@ -1001,9 +1001,18 @@ nav.hcpss-dropdown, div.hcpss-dropdown { background-color: #3E4156; padding-left
 
 /* Figure caption table bottom */
 figure {
-  display: table;
+	display: table;
 }
 figcaption {
-  display: table-caption;
-  caption-side: bottom;
+	display: table-caption;
+	caption-side: bottom;
 }
+
+/* Hide Access Report & Activity - Only admin can view */
+.role-user table.roster .rosterUser.ObserverEnrollment :nth-of-type(6) div { display:none; }
+.role-user table.roster .rosterUser.ObserverEnrollment :nth-of-type(7) div { display:none; }
+
+.role-admin table.roster .rosterUser.ObserverEnrollment :nth-of-type(6) div { display:block; }
+.role-admin table.roster .rosterUser.ObserverEnrollment :nth-of-type(7) div { display:block; }
+
+

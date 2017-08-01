@@ -804,7 +804,6 @@
 .canvas-connection-resources3 ul { margin: 0; padding: 0; }
 .canvas-connection-resources1, .canvas-connection-resources2, .canvas-connection-resources3, .canvas-connection-latest-news2 { font-size: 10pt; }
 
-
 /* Faqs */
 #content-wrapper .user_content .faqs h4 { padding-left: 10px; font-size: 15px;  cursor: pointer; font-family: 'Arimo', sans-serif; color: #0f5091; font-weight: bold;}
 .faqs .arrow {
@@ -998,6 +997,9 @@ nav.hcpss-dropdown, div.hcpss-dropdown { background-color: #3E4156; padding-left
 /* Grades button in nav */
 #grades_menu_item  .menu-item__text { margin-top: -6px; }
 #grades_menu_item svg { width:43px; height: 43px; fill: #fff;}
+
+/* Communities button in nav - override default Canvas default font size*/
+#communities_menu_item .menu-item__text{ font-size: 10px; }
 
 /* Hide Cross-List button */
 #right-side .button-sidebar-wide.crosslist_link { display: none; }
@@ -2446,4 +2448,3 @@ figcaption {
 
 .role-admin table.roster .rosterUser.ObserverEnrollment :nth-of-type(6) div { display:block; }
 .role-admin table.roster .rosterUser.ObserverEnrollment :nth-of-type(7) div { display:block; }
-

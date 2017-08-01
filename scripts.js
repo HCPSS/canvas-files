@@ -1,4 +1,4 @@
-var hcpssDropdown;  // Used for Canvas Connections menu
+var hcpssDropdown;  // Used for Canvas Connections menu 
 
 /******************************************
 	Google Analytics for HCPSS Webmaster account
@@ -9,9 +9,9 @@ var hcpssDropdown;  // Used for Canvas Connections menu
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-59680056-2', 'auto'); // Canvas LMS
-ga('create', 'UA-72246853-1', 'auto', 'digLearningTracker'); // Digital learning
-ga('create', 'UA-59965527-2', {'name': 'rollupProperty'}); // HCPSS
+ga('create', 'UA-59680056-2', 'auto'); // Canvas LMS 
+ga('create', 'UA-72246853-1', 'auto', 'digLearningTracker'); // Digital learning 
+ga('create', 'UA-59965527-2', {'name': 'rollupProperty'}); // HCPSS 
 ga('rollupProperty.send', 'pageview');
 
 var trackLinkClick = function(category, label) {
@@ -25,11 +25,11 @@ var trackLinkClick = function(category, label) {
 
 
 $(document).ready(function(){
-
+		
 	/******************************************
 		Google analytics that runs on document.ready
-	******************************************/
-	var sCourseName = null;
+	******************************************/ 
+	var sCourseName = null; 
 	var sTemp;
 
 	try {
@@ -44,94 +44,107 @@ $(document).ready(function(){
 		}
 	} catch (err) { }
 	ga('send', 'pageview');
-	ga('digLearningTracker.send', 'pageview');
+	ga('digLearningTracker.send', 'pageview'); 
 
 
-	/******************************************
-		Canvas connection nav &
+	/****************************************** 
+		Canvas connection nav & 
 		CourseArc iFrame resizing
-	******************************************/
+	******************************************/ 
 	var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
 	var eventer = window[eventMethod];
 	var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-
+	
 	// Listen to message from child window
 	eventer(messageEvent,function(e) {
-		if (e.origin == "https://hcpss.coursearc.com" || e.origin == "https://dlidhcpss.org" ) {
-			hcpssDropdown = e.data;
-			if ($('nav.hcpss-dropdown').length == 0) {
-				if (e.data != '{"event":"ready"}') {
-					if ($('iframe.hcpss-dropdown').length > 0) {
-						$('iframe.hcpss-dropdown').after(e.data).parent().css('margin', '15px 0');
+		if (e.origin == "https://hcpss.coursearc.com" || e.origin == "https://dlidhcpss.org" ) { 
+			hcpssDropdown = e.data; 
+			if ($('nav.hcpss-dropdown').length == 0) { 
+				if (e.data != '{"event":"ready"}') { 
+					if ($('iframe.hcpss-dropdown').length > 0) { 
+						$('iframe.hcpss-dropdown').after(e.data).parent().css('margin', '15px 0'); 
 					} else if ($('iframe.coursearc').length > 0) {
-						$('iframe.coursearc').height(e.data);
+						$('iframe.coursearc').height(e.data); 
 					}
 				}
 			}
 		}
 	},false);
+	
+	$('iframe.canvas-connection-footer').parent().css('margin', '15px 0'); 
 
-	$('iframe.canvas-connection-footer').parent().css('margin', '15px 0');
 
 	/******************************************
-		Get subdomain/environment
+		for testing code locally 
 	******************************************/
+	/*
+	if (typeof(ENV) === 'undefined') {
+		var ENV = {
+			current_user_roles: []
+		};
+	} */
+
+
+	/******************************************
+		Get subdomain/environment 
+	******************************************/ 
 	var subdomain = getSubdomain();
 
 
 	/******************************************
 		Add extra links to side nav
 	******************************************/
-	// Grades icon
-	var html = '';
-	html = ' <li id="grades_menu_item" class="menu-item ic-app-header__menu-list-item">' +
-        '<a class="ic-app-header__menu-list-link" href="/grades">' +
-        '  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">' +
-        '  	<g>' +
-        '  		<path d="M38.101,36.465h23.798c0.153,0,0.3-0.061,0.409-0.168c0.108-0.109,0.169-0.256,0.169-0.41v-1.615   c0-0.32-0.259-0.58-0.578-0.578l-23.798-0.002c-0.32,0-0.58,0.26-0.58,0.58l-0.001,1.615c0.001,0.154,0.062,0.301,0.17,0.41   C37.799,36.404,37.948,36.465,38.101,36.465z"></path>' +
-        '  		<path d="M61.899,63.535H38.101c-0.307,0-0.58,0.271-0.58,0.578v1.617c0,0.318,0.26,0.578,0.58,0.578l23.798-0.002   c0.159,0.002,0.303-0.064,0.409-0.17c0.104-0.104,0.169-0.248,0.169-0.408v-1.615c0-0.154-0.061-0.301-0.169-0.41   C62.199,63.596,62.052,63.535,61.899,63.535z"></path>' +
-        '  		<path d="M54.589,45.717H38.101c-0.307,0-0.58,0.271-0.58,0.578v1.617c0,0.318,0.26,0.578,0.58,0.578l15.935-0.001   C54.132,47.535,54.323,46.609,54.589,45.717z"></path>' +
-        '  		<path d="M58.071,39.705l-19.97-0.002c-0.319,0.002-0.578,0.26-0.58,0.58v1.615c0,0.152,0.061,0.301,0.169,0.41   c0.11,0.107,0.255,0.17,0.409,0.17h17.896C56.581,41.474,57.277,40.544,58.071,39.705z"></path>' +
-        '  		<path d="M68.96,65c-1.455,0-2.858-0.218-4.188-0.604l0,8.277H35.228l0.001-45.346H64.77l0,8.277C66.102,35.218,67.505,35,68.96,35   c1.077,0,2.126,0.119,3.139,0.335V23.664c0-0.979-0.382-1.898-1.075-2.592C70.333,20.38,69.414,20,68.435,20H31.564   c-0.978,0-1.897,0.381-2.59,1.072c-0.692,0.693-1.073,1.613-1.073,2.592v52.672c-0.001,0.979,0.38,1.898,1.073,2.592   C29.666,79.62,30.585,80,31.564,80h36.872c0.978,0,1.897-0.383,2.589-1.074c0.692-0.691,1.075-1.611,1.075-2.59V64.665   C71.086,64.881,70.038,65,68.96,65z"></path>' +
-        '  		<path d="M55.998,57.523l-17.897-0.002c-0.319,0.002-0.578,0.26-0.58,0.58v1.615c0,0.152,0.061,0.301,0.169,0.41   c0.11,0.107,0.255,0.17,0.409,0.17h19.973C57.279,59.457,56.583,58.528,55.998,57.523z"></path>' +
-        '  		<path d="M54.036,51.511L38.101,51.51c-0.32,0-0.58,0.26-0.58,0.58l-0.001,1.615c0.001,0.154,0.062,0.301,0.17,0.41   c0.108,0.107,0.257,0.168,0.41,0.168h16.488C54.323,53.391,54.132,52.465,54.036,51.511z"></path>' +
-        '  		<g>' +
-        '  			<path d="M70.54,37.601c-6.847-0.873-13.107,3.972-13.979,10.819c-0.873,6.847,3.973,13.107,10.82,13.979    c6.847,0.873,13.107-3.974,13.979-10.821C82.232,44.731,77.387,38.473,70.54,37.601z M72.923,56.5    c-0.179,0.139-0.38,0.193-0.606,0.164c-0.225-0.028-0.404-0.131-0.537-0.31c-0.071-0.093-0.122-0.187-0.151-0.284l-0.955-3.825    l-3.928-0.5l-1.891,3.462c-0.052,0.087-0.125,0.166-0.217,0.237c-0.179,0.139-0.381,0.193-0.606,0.164    c-0.225-0.028-0.406-0.131-0.541-0.31c-0.136-0.179-0.19-0.38-0.161-0.605c0.016-0.123,0.06-0.241,0.132-0.357l5.439-10.019    c0.21-0.349,0.492-0.499,0.845-0.454c0.363,0.047,0.598,0.263,0.705,0.651l2.764,11.103c0.028,0.107,0.035,0.221,0.02,0.338    C73.206,56.181,73.102,56.361,72.923,56.5z M79.376,48.614l-3.733,2.889c-0.09,0.07-0.204,0.102-0.316,0.088    c-0.113-0.015-0.216-0.074-0.286-0.165l-1.709-2.208c-0.146-0.187-0.111-0.457,0.077-0.602l0.848-0.658    c0.09-0.068,0.205-0.1,0.317-0.085c0.113,0.015,0.216,0.073,0.285,0.163l0.791,1.021l2.545-1.971    c0.094-0.072,0.208-0.1,0.316-0.086c0.109,0.014,0.213,0.069,0.286,0.162l0.656,0.85c0.069,0.09,0.1,0.203,0.085,0.316    C79.524,48.442,79.466,48.544,79.376,48.614z"></path>' +
-        '  			<polygon points="67.583,50.198 70.252,50.539 69.356,46.924   "></polygon>' +
-        '  		</g>' +
-        '  	</g>' +
-        '  </svg>' +
-        '  <div class="menu-item__text">' +
-        '    Grades' +
-        '  </div>' +
-        '</a>' +
+	// Grades icon 
+	var html = ''; 
+	html = ' <li id="grades_menu_item" class="menu-item ic-app-header__menu-list-item">' + 
+        '<a class="ic-app-header__menu-list-link" href="/grades">' + 
+        '  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">' + 
+        '  	<g>' + 
+        '  		<path d="M38.101,36.465h23.798c0.153,0,0.3-0.061,0.409-0.168c0.108-0.109,0.169-0.256,0.169-0.41v-1.615   c0-0.32-0.259-0.58-0.578-0.578l-23.798-0.002c-0.32,0-0.58,0.26-0.58,0.58l-0.001,1.615c0.001,0.154,0.062,0.301,0.17,0.41   C37.799,36.404,37.948,36.465,38.101,36.465z"></path>' + 
+        '  		<path d="M61.899,63.535H38.101c-0.307,0-0.58,0.271-0.58,0.578v1.617c0,0.318,0.26,0.578,0.58,0.578l23.798-0.002   c0.159,0.002,0.303-0.064,0.409-0.17c0.104-0.104,0.169-0.248,0.169-0.408v-1.615c0-0.154-0.061-0.301-0.169-0.41   C62.199,63.596,62.052,63.535,61.899,63.535z"></path>' + 
+        '  		<path d="M54.589,45.717H38.101c-0.307,0-0.58,0.271-0.58,0.578v1.617c0,0.318,0.26,0.578,0.58,0.578l15.935-0.001   C54.132,47.535,54.323,46.609,54.589,45.717z"></path>' + 
+        '  		<path d="M58.071,39.705l-19.97-0.002c-0.319,0.002-0.578,0.26-0.58,0.58v1.615c0,0.152,0.061,0.301,0.169,0.41   c0.11,0.107,0.255,0.17,0.409,0.17h17.896C56.581,41.474,57.277,40.544,58.071,39.705z"></path>' + 
+        '  		<path d="M68.96,65c-1.455,0-2.858-0.218-4.188-0.604l0,8.277H35.228l0.001-45.346H64.77l0,8.277C66.102,35.218,67.505,35,68.96,35   c1.077,0,2.126,0.119,3.139,0.335V23.664c0-0.979-0.382-1.898-1.075-2.592C70.333,20.38,69.414,20,68.435,20H31.564   c-0.978,0-1.897,0.381-2.59,1.072c-0.692,0.693-1.073,1.613-1.073,2.592v52.672c-0.001,0.979,0.38,1.898,1.073,2.592   C29.666,79.62,30.585,80,31.564,80h36.872c0.978,0,1.897-0.383,2.589-1.074c0.692-0.691,1.075-1.611,1.075-2.59V64.665   C71.086,64.881,70.038,65,68.96,65z"></path>' + 
+        '  		<path d="M55.998,57.523l-17.897-0.002c-0.319,0.002-0.578,0.26-0.58,0.58v1.615c0,0.152,0.061,0.301,0.169,0.41   c0.11,0.107,0.255,0.17,0.409,0.17h19.973C57.279,59.457,56.583,58.528,55.998,57.523z"></path>' + 
+        '  		<path d="M54.036,51.511L38.101,51.51c-0.32,0-0.58,0.26-0.58,0.58l-0.001,1.615c0.001,0.154,0.062,0.301,0.17,0.41   c0.108,0.107,0.257,0.168,0.41,0.168h16.488C54.323,53.391,54.132,52.465,54.036,51.511z"></path>' + 
+        '  		<g>' + 
+        '  			<path d="M70.54,37.601c-6.847-0.873-13.107,3.972-13.979,10.819c-0.873,6.847,3.973,13.107,10.82,13.979    c6.847,0.873,13.107-3.974,13.979-10.821C82.232,44.731,77.387,38.473,70.54,37.601z M72.923,56.5    c-0.179,0.139-0.38,0.193-0.606,0.164c-0.225-0.028-0.404-0.131-0.537-0.31c-0.071-0.093-0.122-0.187-0.151-0.284l-0.955-3.825    l-3.928-0.5l-1.891,3.462c-0.052,0.087-0.125,0.166-0.217,0.237c-0.179,0.139-0.381,0.193-0.606,0.164    c-0.225-0.028-0.406-0.131-0.541-0.31c-0.136-0.179-0.19-0.38-0.161-0.605c0.016-0.123,0.06-0.241,0.132-0.357l5.439-10.019    c0.21-0.349,0.492-0.499,0.845-0.454c0.363,0.047,0.598,0.263,0.705,0.651l2.764,11.103c0.028,0.107,0.035,0.221,0.02,0.338    C73.206,56.181,73.102,56.361,72.923,56.5z M79.376,48.614l-3.733,2.889c-0.09,0.07-0.204,0.102-0.316,0.088    c-0.113-0.015-0.216-0.074-0.286-0.165l-1.709-2.208c-0.146-0.187-0.111-0.457,0.077-0.602l0.848-0.658    c0.09-0.068,0.205-0.1,0.317-0.085c0.113,0.015,0.216,0.073,0.285,0.163l0.791,1.021l2.545-1.971    c0.094-0.072,0.208-0.1,0.316-0.086c0.109,0.014,0.213,0.069,0.286,0.162l0.656,0.85c0.069,0.09,0.1,0.203,0.085,0.316    C79.524,48.442,79.466,48.544,79.376,48.614z"></path>' + 
+        '  			<polygon points="67.583,50.198 70.252,50.539 69.356,46.924   "></polygon>' + 
+        '  		</g>' + 
+        '  	</g>' + 
+        '  </svg>' + 
+        '  <div class="menu-item__text">' + 
+        '    Grades' + 
+        '  </div>' + 
+        '</a>' + 
 		'</li>';
-	$('ul#menu').append(html);
-
-	// Community icon for teachers and admins
+	$('ul#menu').append(html); 
+	
+	// Community icon for teachers and admins 
 	if(typeof(ENV) !== 'undefined' && (ENV.current_user_roles.indexOf('admin') != -1 || ENV.current_user_roles.indexOf('teacher') != -1) ){
 		var html = ''
-		html = ' <li class="menu-item ic-app-header__menu-list-item"> ' +
+		html = ' <li id="communities_menu_item" class="menu-item ic-app-header__menu-list-item"> ' + 
 				' <a id="global_nav_communities_link" href="/courses/378/pages/canvas-communities" class="ic-app-header__menu-list-link">'+
-				'	<div class="menu-item-icon-container" aria-hidden="true"><img src="https://canvasfiles.hcpss.me/images/new-ui-communities-icon.png"></div>'+
+				'	<div class="menu-item-icon-container" aria-hidden="true"><img src="https://hcpcss.s3.amazonaws.com/v5/css/images/new-ui-communities-icon.png"></div>'+
 				'	<div class="menu-item__text">Communities</div> ' +
-				' </a>' +
+				' </a>' + 
 			'</li>';
 		$('ul#menu').append(html);
-	}
+	} 
+
 
 	/******************************************
-		Add extra links to dashboard
+		Add extra links to dashboard  
 	******************************************/
-	// Create container
+	// Create container 
 	$('#dashboard .col-xs-9').after('<ul id="extra-nav"></ul>');
-	$('.ic-Dashboard-header .grid-row').css('position', 'relative');
+	$('.ic-Dashboard-header .grid-row').css('position', 'relative'); 
 
-	// Orientation link
+	// Orientation link 
 	var url = "https://hcpss.instructure.com/courses/9495";
 	var label = "Orientation";
 	$('#extra-nav').append("<li class='menu-item' > <a id='link-orientation' href='" + url + "' class='menu-item-no-drop' target='_blank'>"+label+"</a> </li>");
-
+	
 	// Synergy link for everyone
 	if (subdomain == "hcpss-tc") {
 		var url = "https://hcpss.me/synergy-test";
@@ -139,7 +152,16 @@ $(document).ready(function(){
 		var url = "https://hcpss.me/synergy";
 	}
 	var label = "Synergy";
-	$('#extra-nav').append("<li class='menu-item' > <a id='link-synergy' href='" + url + "' class='menu-item-no-drop' target='_blank' rel='noopener noreferrer'>"+label+"</a> </li>");
+	$('#extra-nav').append("<li class='menu-item' > <a id='link-synergy' href='" + url + "' class='menu-item-no-drop' target='_blank'>"+label+"</a> </li>");
+
+	// GA tracking for all extra nav
+	/* 
+	$('#extra-nav a').click(function() { 
+		trackLinkClick('headerLinkClick', $(this).text()); 
+		return true; 
+	});
+	*/ 
+
 
 	/*******************************************
 		Joe's Request 10/27/2015:
@@ -159,12 +181,20 @@ $(document).ready(function(){
 		}, 500);
 	}
 
+
 	/*******************************************
-		Folding faqs & Accordion
+		 Add text to Grades page for students 
+	*******************************************/
+	/* edited out: request from Joe 11/2/15
+	if(typeof(ENV) !== 'undefined' && ENV.current_user_roles.indexOf('student') != -1) {
+		$('table.student_grades').before('<p>Grade percentages are full year aggregate scores.  For quarterly grades, click the course name.</p>');
+	} */
+
+
+	/*******************************************
+		Folding faqs 
 	*******************************************/
 	var intervalID4 = setInterval(function() {
-		
-		// FAQ
 		$('.faqs h4').each(function() {
 			$(this).prepend('<span class="arrow"></span>');
 			$(this).nextUntil('h4, h3').hide();
@@ -173,20 +203,13 @@ $(document).ready(function(){
 			$(this).nextUntil('h4, h3').slideToggle();
 			$(this).children('.arrow').toggleClass('open');
 		});
-		
-		// Accordion
-		$('.enhanceable_content.accordion div').hide();
-		$('.enhanceable_content.accordion h3').click(function(){
-			$(this).next("div").slideToggle();
-			return false;
-		});
-		
 		window.clearInterval(intervalID4);
 	}, 500);
 
+
 	/*******************************************
-		Remove 'report a problem' and 'submit a feature' from help dialog -
-		only for students/observers
+		Remove 'report a problem' and 'submit a feature' from help dialog - 
+		only for students/observers 
 	*******************************************/
 	$('.help_dialog_trigger').click(function() {
 		var intervalTimes5 = 0;
@@ -205,9 +228,9 @@ $(document).ready(function(){
 			}
 		}, 100);
 	});
+	
 
-
-	/******************************************
+	/****************************************** 
 		Joe's Request 10/29:
 		In the create assignment modal, change Quiz to say Online Quiz
 	*******************************************/
@@ -222,7 +245,7 @@ $(document).ready(function(){
 			window.clearInterval(intervalID6);
 		}
 	}, 500);
-
+	
 
 	var intervalTimes7 = 0;
 	var intervalID7 = setInterval(function() {
@@ -231,11 +254,11 @@ $(document).ready(function(){
 			window.clearInterval(intervalID7);
 		}
 	}, 500);
-
-
+	
+	
 	/*******************************************
-		Shobana's Gradebook code
-	*******************************************/
+		Shobana's Gradebook code 
+	*******************************************/ 
 	//HCPSS Customization to open Student Grades page
 	var regex = new RegExp('/accounts/([0-9]+)/users/([0-9]+)$');
 	var matches = regex.exec(document.location);
@@ -246,122 +269,97 @@ $(document).ready(function(){
 			var url = '/users/' + matches[2] + '/grades?' + gh.innerHTML;
 			$('#right-side-wrapper div').append('<a id="jj_allgrades" class="btn button-sidebar-wide" href="' + url + '"><i class="icon-gradebook"></i> View All Grades for Student</a>');
 		}
-	}
-
-
+	} 
+	
+	
 	// Shobana's Customization - New "Parent Dashboard" button at right side of the dashboard page
-	if( document.location.href == "https://hcpss.instructure.com/" && isParent())
+	if( document.location.href == "https://hcpss.beta.instructure.com/" && isParent()) 
 	{
 		var url = "https://canvasdata.hcpss.me/CANVASStudentGrades";
 		var label = "Students";
 		$('#extra-nav').append("<li class='menu-item' > <a id='link-parent-dashboard' href='" + url + "' class='menu-item-no-drop' target='_blank'>"+label+"</a> </li>");
-	}
-
+	} 
+ 
 	// HCPSS Customization to replace the heading in page with student name
 	var regex = new RegExp('/users/([0-9]+/grades?[a-zA-Z0-9_ ]+)');
 	var matches = regex.exec(document.location);
 	if (matches) {
 		var url = window.location.toString();
-
-
+ 
+ 
 		var originalURL = url.split('?');
-
+ 
 		var userName = originalURL[1];
 		var text = document.getElementsByTagName('h2');
 		var gh = text[0];
-
-		var re = new RegExp('%20', 'g');
+ 
+		var re = new RegExp('%20', 'g');   
 		var re1 = new RegExp('%27', 'g');
-
+ 
 		var studentName = userName.replace(re, ' ');
 		studentName = studentName.replace(re1, "'");
 		gh.innerHTML = "Courses for " + studentName
-
+ 
 		var breadcrumbnodes = document.getElementById('breadcrumbs').childNodes[0].childNodes[1];
 		var classText = breadcrumbnodes.getElementsByClassName("ellipsible");
 		classText[0].innerText = studentName
-
+ 
 		var url = window.location.toString();
-
-
+ 
+ 
 		var originalURL = url.split('/');
 		var finalURL = originalURL[0] + '//' + originalURL[2] + '/accounts/1/' + originalURL[3] + '/' + originalURL[4];
-
+ 
 		var breadcrumbnodes = document.getElementById('breadcrumbs').childNodes[0].childNodes[1];
 		var aTag = breadcrumbnodes.getElementsByTagName('a');
 		aTag[0].href = finalURL
-
+ 
 	}
-
-	/******************************************
-		Modifications to jQuery UI accordion -
+	
+	
+	/****************************************** 
+		Modifications to jQuery UI accordion - 
 		All closed by default.  Dynamic height.
 	*******************************************/
-	// This appears to be depricated but holding on till we do full regression testing.
-	/*
 	var intervalTimes8 = 0;
 	var intervalID8 = setInterval(function() {
-		$('#content .accordion_closed').accordion("option", "collapsible", true);
-		$('#content .accordion_closed').accordion("option", "active", -1);
-		$('#content .accordion_closed').accordion("option", "heightStyle", "content");
+		$('#content .accordion_closed').accordion("option", "collapsible", true); 
+		$('#content .accordion_closed').accordion("option", "active", -1); 
+		$('#content .accordion_closed').accordion("option", "heightStyle", "content"); 
 		if (++intervalTimes8 === 5) {
 			window.clearInterval(intervalID8);
 		}
 	}, 500);
-	*/
 
-	/******************************************
-	 New "fake" tabs - these "tabs" link out
-	 elsewhere rather than to an ID on the page.
-	 *******************************************/
-	var intervalTimes9 = 0;
-	var intervalID9 = setInterval(function() {
-		if ($('.fake-tabs').length > 0 && !$('.fakeTabs').hasClass('ui-tabs')) {
-			$('.fake-tabs').addClass('ui-tabs ui-widget ui-widget-content ui-corner-all');
-			$('.fake-tabs ul').addClass('ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all')
-			$('.fake-tabs ul li').addClass('ui-state-hover ui-state-default ui-corner-top');
-			$('.fake-tabs ul li a').addClass('ui-tabs-anchor');
 
-			/* Add class ui-tabs-active if on the tab/page currently */
-			$('.fake-tabs ul a').each(function () {
-				if ($(this).prop('href') == window.location.href.replace(window.location.search,"")) {
-					$(this).parent().addClass('active');
-				}
-			});
-		}
-
-		if (++intervalTimes9 === 5) {
-			window.clearInterval(intervalID9);
-		}
-	}, 500);
 });
 
 
 /*******************************************************
-JS Fallback for tiles, which use flexbox.
-Tiles are used for parent-facing courses.
+JS Fallback for tiles, which use flexbox. 
+Tiles are used for parent-facing courses. 
 http://osvaldas.info/flexbox-based-responsive-equal-height-blocks-with-javascript-fallback
 *******************************************************/
 $(document).ready(function(){
     'use strict';
-
+ 
     var s = document.body || document.documentElement, s = s.style;
     //if( s.webkitFlexWrap == '' || s.msFlexWrap == '' || s.flexWrap == '' ) return true;
-
+ 
     var $list       = $( '#content-wrapper .user_content ul.tiles' ),
         $items      = $list.find( 'li' ),
         setHeights  = function()
         {
             $items.css( 'height', 'auto' );
-
+ 
             var perRow = Math.floor( $list.width() / $items.width() );
             if( perRow == null || perRow < 2 ) return true;
-
+ 
             for( var i = 0, j = $items.length; i < j; i += perRow )
             {
                 var maxHeight   = 0,
                     $row        = $items.slice( i, i + perRow );
-
+ 
                 $row.each( function()
                 {
                     var itemHeight = parseInt( $( this ).outerHeight() );
@@ -370,9 +368,9 @@ $(document).ready(function(){
                 $row.css( 'height', maxHeight );
             }
         };
-
+ 
     setHeights();
-    $( window ).on( 'resize', setHeights );
+    $( window ).on( 'resize', setHeights ); 
 });
 
 
@@ -536,6 +534,9 @@ $(document).ready(function() {
 
 });
 
+
+
+
 /* Set up Lightboxes */
 $(document).ready(function() {
 
@@ -557,7 +558,7 @@ $(document).ready(function() {
 			openEffect	: 'elastic',
 			closeEffect	: 'elastic'
 		});
-
+		
 		$('a.lightbox-interactive').fancybox({
 			maxWidth	: 750,
 			maxHeight	: 690,
@@ -568,37 +569,12 @@ $(document).ready(function() {
 			closeClick	: false,
 			openEffect	: 'none',
 			closeEffect	: 'none',
-			type: 'iframe',
+			type: 'iframe', 
 			closeBtn: true
 		});
 
 
 	}, 500);
-
-	// Role DOM Support
-	if(typeof(ENV) !== 'undefined'){ 
-						
-		// Add Role Classes To Body
-		$.each(ENV.current_user_roles, function(i,e){
-			$("body").addClass("role-"+e);
-		});
-		
-		// Hide Access Log
-		if( (ENV.current_user_roles.indexOf('admin')) == -1 ){		
-			$(".button-sidebar-wide .icon-clock").parent().hide();
-		} 
-		
-	}
-	
-	// Modules Collapse By Default
-    // Parsing out various sections of the URL.
-    var urlFifthLoc = document.URL.split('/')[5];
-
-    if (urlFifthLoc === 'modules') {		
-		$(".item-group-condensed").each(function(){
-			$(this).addClass("collapsed_module");
-		});
-    }     
 
 });
 
@@ -611,77 +587,13 @@ function getSubdomain() {
 	}
 }
 
-function isParent() {
-	if (typeof(ENV) !== 'undefined')  {
-		if ( $.inArray('observer', ENV['current_user_roles']) !== -1 ) {
-			return true;
-		} else if ($.inArray('user', ENV['current_user_roles']) == 0 && ENV['current_user_roles'].length == 1) {
-			return true;
-		}
-	}
+function isParent() { 
+	if (typeof(ENV) !== 'undefined')  { 
+		if ( $.inArray('observer', ENV['current_user_roles']) !== -1 ) { 
+			return true; 
+		} else if ($.inArray('user', ENV['current_user_roles']) == 0 && ENV['current_user_roles'].length == 1) { 
+			return true; 
+		} 
+	} 
 	return false;
-}
-
-/******************************************
-  Add HCPSS Calendar links to Calendar
-******************************************/
-
-if (document.location.pathname.indexOf("/calendar") > -1) {
-  var html = '';
-  html = '<div class="rs-section" id="hcpss_calendar_link" style="text-align: center; margin-bottom: 14px; text-decoration: none">' +
-          '<a class="link_to_hcpss_calendar" href="http://www.hcpss.org/calendar/">' +
-            'HCPSS System Calendar'
-          '</a>' +
-         '</div>'
-
-  $('aside#right-side').prepend(html);
-}
-
-
-////////////////////////////////////////////////////
-// DESIGN TOOLS CONFIG                            //
-////////////////////////////////////////////////////
-// Copyright (C) 2016  Utah State University
-var DT_variables = {
-        iframeID: '',
-        // Path to the hosted USU Design Tools
-        path: 'https://designtools.ciditools.com/',
-        templateCourse: '55955',
-        // OPTIONAL: Button will be hidden from view until launched using shortcut keys
-        hideButton: true,
-        // OPTIONAL: Limit tools loading by users role
-        limitByRole: false, // set to true to limit to roles in the roleArray
-        // adjust roles as needed
-        roleArray: [
-            'student',
-            'teacher',
-            'admin'
-        ],
-        // OPTIONAL: Limit tools to an array of Canvas user IDs
-        limitByUser: false, // Change to true to limit by user
-        // add users to array (Canvas user ID not SIS user ID)
-        userArray: [
-            '1234',
-            '987654'
-        
-        ]
-    };
-
-// Run the necessary code when a page loads
-$(document).ready(function () {
-    'use strict';
-    // This runs code that looks at each page and determines what controls to create
-    $.getScript(DT_variables.path + 'js/master_controls.js', function () {
-        console.log('master_controls.js loaded');
-    });
-});
-////////////////////////////////////////////////////
-// END DESIGN TOOLS CONFIG                        //
-////////////////////////////////////////////////////
-
-// ADD CLASS TO CONTENT WHERE DESIGN TOOLS IS NOT USED
-function klAdditionalAfterContentLoaded() {
-    if ($('#kl_wrapper_3').length === 0) {
-        $('.user_content').addClass('not_design_tools');
-    }
 }

@@ -1040,7 +1040,7 @@ var msgobs = {
                   options = {
                     mode: 'courses',
                     id: results.contexts[0],
-                    query: 'search_users?search_term=' + v[1],
+                    query: 'users/' + v[1],
                     type: ''
                   };
                 }

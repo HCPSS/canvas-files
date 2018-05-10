@@ -1,9 +1,9 @@
-#############################################################################
+#################################################################################
 #	Script takes a list of student names and their Canvas Ids and generates #
 #	a grade report. The input file needs 2 fields with the headers: User	#
 #	and Canvas_Id. The report that is generated contains 3 columns: Name,	#
-#	course and current grade.												#
-#############################################################################
+#	course and current grade.						#
+#################################################################################
 
 # import gems
 require 'typhoeus'

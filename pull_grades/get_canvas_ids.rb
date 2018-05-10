@@ -1,9 +1,9 @@
-#############################################################################
+################################################################################
 #	Script takes a list of SIS_Id's and outputs a csv list of Canvas ID's   #
 #	to use in the pull_curr_grade.rb script. Uses the sis_user_id parameter #
-#	to identify HCPSS students. This data can also be the	 				#
+#	to identify HCPSS students. This data can also be the	 		#
 #	integration_id or login_id, but the column header should remain SIS_Id	#
-#############################################################################
+#################################################################################
 
 # import gems
 require 'typhoeus'

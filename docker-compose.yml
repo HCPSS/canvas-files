@@ -1,0 +1,8 @@
+version: '3'
+services:
+  canvas-files:
+    build: .
+    image: reg.hcpss.org/canvas/canvas-files:latest
+    container_name: canvas-files
+    ports:
+    - "8809:80"

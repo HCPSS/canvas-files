@@ -1,8 +1,14 @@
-version: '3'
+version: '3.5'
 services:
   canvas-files:
     build: .
     image: reg.hcpss.org/canvas/canvas-files:latest
-    container_name: canvas-files
     ports:
-    - "8809:80"
+      - target: 80
+        published: 8809
+        mode: host
+    deploy:
+      mode: replicated
+      replicas: 2
+      placement:
+        constraints: [node.labels.canvas_files == true]

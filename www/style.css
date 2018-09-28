@@ -145,6 +145,11 @@
   background-size: 40px 40px;
 }
 
+/* Move new dashboard agenda buttons to the left of the HCPSS extra-nav icons 9/27/18 */
+#dashboard-planner-header{
+	margin-right: 200px;	
+}
+
 /* Styles for the general WYSIWYG content area (fonts, colors, etc) */
 #content-wrapper .user_content.not_design_tools {
   font-family: 'Arimo', sans-serif;

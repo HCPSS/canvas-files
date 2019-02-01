@@ -109,7 +109,8 @@
   display: block;
   margin: 0;
   position: absolute;
-  right: 50px;
+  /* right: 50px; */
+  right: 300px;
   bottom: 10px;
 }
 #extra-nav li {
@@ -143,6 +144,11 @@
   width: auto;
   background-image: url("https://hcpss.s3.amazonaws.com/CanvasImages/hcpss-parent.png");
   background-size: 40px 40px;
+}
+
+/* Move new dashboard agenda icons to the left of the HCPSS extra-nav icons 9/27/18 */
+#dashboard-planner-header{
+	margin-right: 200px;	
 }
 
 /* Styles for the general WYSIWYG content area (fonts, colors, etc) */
@@ -2453,4 +2459,3 @@ figcaption {
 
 .role-admin table.roster .rosterUser.ObserverEnrollment :nth-of-type(6) div { display:block; }
 .role-admin table.roster .rosterUser.ObserverEnrollment :nth-of-type(7) div { display:block; }
-

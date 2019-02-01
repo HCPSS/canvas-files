@@ -1986,3 +1986,14 @@ var msgobs = {
 $(document).ready(function () {
   msgobs.init();
 });
+
+
+//Atomic Search -- Code for search widget -- 2/1/2019
+var atomicSearchConfig = {
+  accountId: 1, // The ID of your root account (usually 1)
+  externalToolId: 54649, // The ID of your installation of Atomic Search
+};
+
+var atomicSearchWidgetScript = document.createElement("script");
+atomicSearchWidgetScript.src = "https://d2u53n8918fnto.cloudfront.net/atomic_search_widget.js" + "?ts=" + new Date().getTime();
+document.getElementsByTagName("head")[0].appendChild(atomicSearchWidgetScript);

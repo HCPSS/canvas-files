@@ -746,13 +746,13 @@ function klAdditionalAfterContentLoaded() {
 }
 
 ////////////////////////////////////		
-// Math Jax CDN Include & Config		
+// Math Jax CDN Include & Config	//REMOVED 3/11/2019	
 ////////////////////////////////////		
-var mj = document.createElement('script');		
+/* var mj = document.createElement('script');		
 mj.type = 'text/javascript';		
 mj.async = true;		
 mj.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML'; //config was TeX-AMS-MML_HTMLorMML		
-document.getElementsByTagName('body')[0].appendChild(mj);		
+document.getElementsByTagName('body')[0].appendChild(mj); */			
 		
 ////////////////////////////////////		
 // OBSERVERS ADDON		

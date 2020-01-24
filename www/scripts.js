@@ -1,3 +1,5 @@
+
+
 var hcpssDropdown;  // Used for Canvas Connections menu
 
 /******************************************
@@ -7,18 +9,18 @@ var hcpssDropdown;  // Used for Canvas Connections menu
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','//www.google-analytics.com/analytics.js','custom_ga');
 
-ga('create', 'UA-59680056-2', 'auto'); // Canvas LMS
-ga('create', 'UA-72246853-1', 'auto', 'digLearningTracker'); // Digital learning
-ga('create', 'UA-59965527-2', {'name': 'rollupProperty'}); // HCPSS
-ga('rollupProperty.send', 'pageview');
+custom_ga('create', 'UA-59680056-2', 'auto'); // Canvas LMS
+custom_ga('create', 'UA-72246853-1', 'auto', 'digLearningTracker'); // Digital learning
+custom_ga('create', 'UA-59965527-2', {'name': 'rollupProperty'}); // HCPSS
+custom_ga('rollupProperty.send', 'pageview');
 
 var trackLinkClick = function(category, label) {
-   ga('send', 'event', category, 'click', label, {
+   custom_ga('send', 'event', category, 'click', label, {
      'transport': 'beacon'
    });
-   ga('digLearningTracker.send', 'event', category, 'click', label, {
+   custom_ga('digLearningTracker.send', 'event', category, 'click', label, {
      'transport': 'beacon'
    });
 }
@@ -47,7 +49,7 @@ $(document).ready(function(){
     }
 	console.log(sUserRole);
 
-    ga('set', 'dimension16', sUserRole); 
+    custom_ga('set', 'dimension16', sUserRole); 
 
 
 	//If the user is in a course
@@ -66,17 +68,17 @@ $(document).ready(function(){
 
             $.when(d1).done(function (_account) {
                 // ...do stuff...
-                ga('set', 'dimension1', sTemp[1]);
-                ga('set', 'dimension2', sCourseName);
-				ga('set', 'dimension3', subaccount);
-				ga('digLearningTracker.set', 'dimension1', sTemp[1]);
-				ga('digLearningTracker.set', 'dimension2', sCourseName);
-				ga('digLearningTracker.set', 'dimension3', subaccount);
+                custom_ga('set', 'dimension1', sTemp[1]);
+                custom_ga('set', 'dimension2', sCourseName);
+				custom_ga('set', 'dimension3', subaccount);
+				custom_ga('digLearningTracker.set', 'dimension1', sTemp[1]);
+				custom_ga('digLearningTracker.set', 'dimension2', sCourseName);
+				custom_ga('digLearningTracker.set', 'dimension3', subaccount);
             });
         }         
     } catch (err) {}
-	ga('send', 'pageview');
-	ga('digLearningTracker.send', 'pageview');
+	custom_ga('send', 'pageview');
+	custom_ga('digLearningTracker.send', 'pageview');
     
 	// END - Google Analytics Tracking Code
 
@@ -142,7 +144,7 @@ $(document).ready(function(){
 	$('ul#menu').append(html);
 
 	// Community icon for teachers and admins
-	if(typeof(ENV) !== 'undefined' && (ENV.current_user_roles.indexOf('admin') != -1 || ENV.current_user_roles.indexOf('teacher') != -1) ){
+	if(typeof(ENV) !== 'undefined' && ($.inArray('admin', ENV['current_user_roles']) > -1 || $.inArray('teacher', ENV['current_user_roles']) > -1) ){	
 		var html = ''
 		html = ' <li id="communities_menu_item" class="menu-item ic-app-header__menu-list-item"> ' +
 				' <a id="global_nav_communities_link" href="/courses/378/pages/canvas-communities" class="ic-app-header__menu-list-link">'+
@@ -156,6 +158,7 @@ $(document).ready(function(){
 	/******************************************
 		Add extra links to dashboard
 	******************************************/
+$(document).ready(function(){
 	// Create container
 	$('#dashboard .ic-Dashboard-header__title').after('<ul id="extra-nav"></ul>');
 	$('.ic-Dashboard-header').css('position', 'relative');
@@ -174,6 +177,7 @@ $(document).ready(function(){
 	}
 	var label = "Synergy";
 	$('#extra-nav').append("<li class='menu-item' > <a id='link-synergy' href='" + url + "' class='menu-item-no-drop' target='_blank' rel='noopener noreferrer'>"+label+"</a> </li>");
+});
 
 	/*******************************************
 		Joe's Request 10/27/2015:
@@ -248,7 +252,7 @@ $(document).ready(function(){
 		var intervalTimes5 = 0;
 		var intervalID5 = setInterval(function() {
 			if(typeof(ENV) !== 'undefined' &&
-				!(ENV.current_user_roles.indexOf('admin') != -1 || ENV.current_user_roles.indexOf('teacher') != -1)
+				!($.inArray('admin', ENV['current_user_roles']) > -1 || $.inArray('teacher', ENV['current_user_roles']) > -1)
 			){
 				$('#help-dialog .text').each(function() {
 					if ($(this).text() == "Report a Problem" || $(this).text() == "Submit a Feature Idea") {
@@ -292,6 +296,7 @@ $(document).ready(function(){
 	/*******************************************
 		Shobana's Gradebook code
 	*******************************************/
+$(document).ready(function(){ 
 	//HCPSS Customization to open Student Grades page
 	var regex = new RegExp('/accounts/([0-9]+)/users/([0-9]+)$');
 	var matches = regex.exec(document.location);
@@ -348,6 +353,8 @@ $(document).ready(function(){
 		aTag[0].href = finalURL
 
 	}
+});	
+	
 
 	/******************************************
 		Modifications to jQuery UI accordion -
@@ -633,14 +640,15 @@ $(document).ready(function() {
 
 	// Role DOM Support
 	if(typeof(ENV) !== 'undefined'){ 
-						
-		// Add Role Classes To Body
+
+	//removed 1/23/2020 - conflicting with design tools and not finding any place this class addition is used
+/* 		// Add Role Classes To Body
 		$.each(ENV.current_user_roles, function(i,e){
 			$("body").addClass("role-"+e);
-		});
+		}); */
 		
 		// Hide Parent Access Log from Teachers
-		if( (ENV.current_user_roles.indexOf('admin')) == -1 ){	
+		if($.inArray('admin', ENV['current_user_roles']) == -1){
 			$(".profileEnrollment__Items").each(function (){
 				if ($(this).is(":contains('Observer')")){
 					$(".button-sidebar-wide .icon-clock").parent().hide();
@@ -1997,3 +2005,11 @@ var atomicSearchConfig = {
 var atomicSearchWidgetScript = document.createElement("script");
 atomicSearchWidgetScript.src = "https://d2u53n8918fnto.cloudfront.net/atomic_search_widget.js" + "?ts=" + new Date().getTime();
 document.getElementsByTagName("head")[0].appendChild(atomicSearchWidgetScript);
+
+//});
+
+//Canvas Studio Navigation menu placement
+//if(ENV.current_user_roles.indexOf('admin') > 0 ||  ENV.current_user_roles.indexOf('teacher') > 0) {
+if(	$.inArray('admin', ENV['current_user_roles']) > -1 || $.inArray('teacher', ENV['current_user_roles']) > -1){
+   $('#context_external_tool_55733_menu_item').show();
+};

@@ -144,6 +144,7 @@ $(document).ready(function(){
 	$('ul#menu').append(html);
 
 	// Community icon for teachers and admins
+	//if(typeof(ENV) !== 'undefined' && (ENV.current_user_roles.indexOf('admin') != -1 || ENV.current_user_roles.indexOf('teacher') != -1) ){
 	if(typeof(ENV) !== 'undefined' && ($.inArray('admin', ENV['current_user_roles']) > -1 || $.inArray('teacher', ENV['current_user_roles']) > -1) ){	
 		var html = ''
 		html = ' <li id="communities_menu_item" class="menu-item ic-app-header__menu-list-item"> ' +
@@ -158,6 +159,7 @@ $(document).ready(function(){
 	/******************************************
 		Add extra links to dashboard
 	******************************************/
+//$(window).on('load',function(){
 $(document).ready(function(){
 	// Create container
 	$('#dashboard .ic-Dashboard-header__title').after('<ul id="extra-nav"></ul>');
@@ -252,6 +254,7 @@ $(document).ready(function(){
 		var intervalTimes5 = 0;
 		var intervalID5 = setInterval(function() {
 			if(typeof(ENV) !== 'undefined' &&
+				//!(ENV.current_user_roles.indexOf('admin') != -1 || ENV.current_user_roles.indexOf('teacher') != -1)
 				!($.inArray('admin', ENV['current_user_roles']) > -1 || $.inArray('teacher', ENV['current_user_roles']) > -1)
 			){
 				$('#help-dialog .text').each(function() {
@@ -296,6 +299,7 @@ $(document).ready(function(){
 	/*******************************************
 		Shobana's Gradebook code
 	*******************************************/
+//$(window).on('load',function(){ 
 $(document).ready(function(){ 
 	//HCPSS Customization to open Student Grades page
 	var regex = new RegExp('/accounts/([0-9]+)/users/([0-9]+)$');
@@ -648,6 +652,7 @@ $(document).ready(function() {
 		}); */
 		
 		// Hide Parent Access Log from Teachers
+//		if( (ENV.current_user_roles.indexOf('admin')) == -1 ){	
 		if($.inArray('admin', ENV['current_user_roles']) == -1){
 			$(".profileEnrollment__Items").each(function (){
 				if ($(this).is(":contains('Observer')")){
@@ -766,42 +771,21 @@ document.getElementsByTagName('body')[0].appendChild(mj);
 // OBSERVERS ADDON		
 ////////////////////////////////////
 
-
-// ==UserScript==
-// @name        Message Observers
-// @namespace   msgobs
-// @include     https://canvas.test.instructure.com/*
-// @include     https://canvas.instructure.com/*
-// @version     v0.06
-// @grant       none
-// ==/UserScript==
-
-// If you are using TamperMonkey / GreaseMonkey you will need to update the above URLs
-//  to your own canvas instance. Don't forget the * after the trailing slash to ensure the script runs on all pages
-//  Alternativley you can specify which pages this script should run on from the GreaseMonkey
-//  control panel.
-
-// The above UserScript block may be removed entirely if you are not using GreaseMonkey or TamperMonkey etc, and are
-// instead applying the script to your entire site.
+//Updated to v0.07 on 4/20/20 to fix Invalid recipient name error
 
 /*
- * MSGOBS v0.06
+ * MSGOBS v0.07
  * https:// github.com/sdjrice/msgobs
  * Stephen Rice
  * srice@scc.wa.edu.au
  */
 
- /*
+/*
   * Please Note:
   * There are currently two somewhat separate observer lookup methods within this script
   * The older method, which wasn't well suited to handling group lookups will be
   * removed, following a big code cleanup.
   * Sorry about that.
-  */
-  
-   /*
-  * 10/11/17 Update: corrects error in "message students who ..." messages being sent to courses
-  * with high enrollments
   */
 
 var msgobs = {
@@ -828,19 +812,19 @@ var msgobs = {
 
   launch: function (type) {
     console.log('----------------');
-    console.log('MSGOBS \n v0.06 \nhttps://github.com/sdjrice/msgobs');
+    console.log('MSGOBS \n v0.07 \nhttps://github.com/sdjrice/msgobs');
     console.log('Stephen Rice \nsrice@scc.wa.edu.au');
     console.log('----------------');
 
     this.common.init();
 
     switch (type) {
-      case 'conversations':
-        this.conversations.init();
-        break;
-      case 'gbook':
-        this.gradebook.init();
-        break;
+    case 'conversations':
+      this.conversations.init();
+      break;
+    case 'gbook':
+      this.gradebook.init();
+      break;
     }
   },
 
@@ -972,18 +956,18 @@ var msgobs = {
           id = id.split('_');
 
           switch (id.length) {
-            case 1:
-              // user id
-              results.expand.push(['user', id[0]]);
-              break;
-            case 2:
-              // course, section
-              results.expand.push([id[0], id[1]]);
-              break;
-            case 3:
-              // course, section, type
-              results.expand.push([id[0], id[1], id[2]]);
-              break;
+          case 1:
+            // user id
+            results.expand.push(['user', id[0]]);
+            break;
+          case 2:
+            // course, section
+            results.expand.push([id[0], id[1]]);
+            break;
+          case 3:
+            // course, section, type
+            results.expand.push([id[0], id[1], id[2]]);
+            break;
           }
         });
       },
@@ -1015,7 +999,8 @@ var msgobs = {
             results.users.forEach(function (v) {
               results.users.simplified.push({
                 id: v.id,
-                name: v.name
+                name: v.name,
+                userObj: v
               });
             });
             msgobs.common.getObservers.process.lookup.init(results);
@@ -1036,47 +1021,47 @@ var msgobs = {
             var options = false;
 
             switch (v[0]) {
-              case 'user':
-                if (results.contexts[0] === 'none') {
-                  options = {
-                    mode: 'users',
-                    id: v[1],
-                    query: '',
-                    type: ''
-                  };
-                } else {
-                  options = {
-                    mode: 'courses',
-                    id: results.contexts[0],
-                    query: 'users/' + v[1],
-                    type: ''
-                  };
-                }
-                break;
-              case 'course':
+            case 'user':
+              if (results.contexts[0] === 'none') {
+                options = {
+                  mode: 'users',
+                  id: v[1],
+                  query: '',
+                  type: ''
+                };
+              } else {
                 options = {
                   mode: 'courses',
-                  id: v[1],
-                  query: 'users',
-                  type: type
-                };
-                break;
-              case 'section':
-                options = {
-                  mode: 'sections',
-                  id: v[1],
-                  query: 'enrollments',
+                  id: results.contexts[0],
+                  query: 'users/' + v[1],
                   type: ''
                 };
-                break;
-              case 'group':
-                options = {
-                  mode: 'groups',
-                  id: v[1],
-                  query: 'users',
-                  type: ''
-                };
-                break;
+              }
+              break;
+            case 'course':
+              options = {
+                mode: 'courses',
+                id: v[1],
+                query: 'users',
+                type: type
+              };
+              break;
+            case 'section':
+              options = {
+                mode: 'sections',
+                id: v[1],
+                query: 'enrollments',
+                type: ''
+              };
+              break;
+            case 'group':
+              options = {
+                mode: 'groups',
+                id: v[1],
+                query: 'users',
+                type: ''
+              };
+              break;
             }
             msgobs.common.getEnrolmentsRecursively.init(options, callback, results);
           });
@@ -1115,7 +1100,7 @@ var msgobs = {
             },
 
             handle: function (data, status, results) {
-              results.contexts.getCount ++;
+              results.contexts.getCount++;
               data.forEach(function (v) {
                 if (results.contexts.indexOf(v.course_id) === -1) { // don't make duplicates
                   results.contexts.push(v.course_id);
@@ -1177,7 +1162,8 @@ var msgobs = {
                   var observerData = {
                     id: enrolment.user_id,
                     name: enrolment.user.name,
-                    observing: user.name
+                    observing: user.name,
+                    userObj: enrolment.user
                   };
                   // omit duplicate entries, add additional observees to existing entry.
                   var observerDuplicate = msgobs.common.searchObjArray(results.observers, observerData.id);
@@ -1222,7 +1208,7 @@ var msgobs = {
         collatedEnrolments.enrolments.push(data);
         collatedEnrolments.count++;
         if (collatedEnrolments.count >= collatedEnrolments.total) {
-         // oncomplete, call callback function.
+          // oncomplete, call callback function.
           var enrolments = [];
           collatedEnrolments.enrolments.forEach(function (v) {
             enrolments = enrolments.concat(v);
@@ -1315,9 +1301,6 @@ var msgobs = {
       recipientEl: '.ac-token'
     },
     init: function () {
-      var ctx = this;
-      // set bindings for buttons
-      var messagebox = document.getElementsByTagName('body');
       msgobs.common.btnAddObs.bind('click', function () {
         msgobs.conversations.getObserversInit();
       });
@@ -1411,66 +1394,61 @@ var msgobs = {
       });
 
       switch (this.step) {
-        case 1:
-          var context;
-          if (this.mode === 'user') {
-            context = 'none';
-            msgobs.common.notify(msgobs.common.txt.noContext, 'success');
-          } else {
-            context = this.courseID;
+      case 1:
+        var context;
+        if (this.mode === 'user') {
+          context = 'none';
+          msgobs.common.notify(msgobs.common.txt.noContext, 'success');
+        } else {
+          context = this.courseID;
+        }
+
+        var hasGroups = 0;
+        recipients.forEach(function (v) {
+          if (v.indexOf('course') !== -1 || v.indexOf('group') !== -1 || v.indexOf('section') !== -1) {
+            hasGroups = 1;
+          }
+        });
+
+        if (hasGroups) {
+          msgobs.common.notify(msgobs.common.txt.groupExpansion, 'success');
+        }
+
+        msgobs.common.btnAddObs.addClass('disabled').text(msgobs.options.busyText);
+        msgobs.common.btnRmvStu.addClass('disabled');
+        msgobs.common.getObservers.init(recipients, context, callback);
+
+        break;
+      case 2:
+        var observers = data[0];
+        var users = data[1];
+        var matchFlag = data[2];
+        msgobs.log(observers);
+        // complete!
+        if (observers.length || users.length) {
+          msgobs.conversations.clear();
+          this.insert(users, observers);
+
+          if (users.length && !observers.length && matchFlag) {
+            msgobs.common.notify(msgobs.common.txt.noNewObservers, 'success');
           }
 
-          var hasGroups = 0;
-          recipients.forEach(function (v) {
-            if (v.indexOf('course') !== -1 || v.indexOf('group') !== -1 || v.indexOf('section') !== -1) {
-              hasGroups = 1;
-            }
-          });
-
-          if (hasGroups) {
-            msgobs.common.notify(msgobs.common.txt.groupExpansion, 'success');
-          }
-
-          msgobs.common.btnAddObs.addClass('disabled').text(msgobs.options.busyText);
-          msgobs.common.btnRmvStu.addClass('disabled');
-          msgobs.common.getObservers.init(recipients, context, callback);
-
-          break;
-        case 2:
-          var observers = data[0];
-          var users = data[1];
-          var matchFlag = data[2];
-          msgobs.log(observers);
-          // complete!
-          if (observers.length || users.length) {
-            msgobs.conversations.clear(observers.concat(users));
-            users.forEach(function (v) {
-              msgobs.conversations.insert(v, false);
-            });
-            observers.forEach(function (v) {
-              msgobs.conversations.insert(v, true);
-            });
-
-            if (users.length && !observers.length && matchFlag) {
-              msgobs.common.notify(msgobs.common.txt.noNewObservers, 'success');
-            }
-
-            if (users.length && !observers.length && !matchFlag) {
-              msgobs.common.notify(msgobs.common.txt.addObsNone, 'warning');
-              msgobs.log('No observers found');
-            }
-
-            if (observers.length) {
-              msgobs.common.notify(msgobs.common.txt.addObsSuccess, 'success');
-            }
-            msgobs.log('Inserted results.');
-          } else {
+          if (users.length && !observers.length && !matchFlag) {
             msgobs.common.notify(msgobs.common.txt.addObsNone, 'warning');
             msgobs.log('No observers found');
           }
-          msgobs.common.btnRmvStu.removeClass('disabled');
-          msgobs.common.btnAddObs.removeClass('disabled').text(msgobs.options.observersText);
-          break;
+
+          if (observers.length) {
+            msgobs.common.notify(msgobs.common.txt.addObsSuccess, 'success');
+          }
+          msgobs.log('Inserted results.');
+        } else {
+          msgobs.common.notify(msgobs.common.txt.addObsNone, 'warning');
+          msgobs.log('No observers found');
+        }
+        msgobs.common.btnRmvStu.removeClass('disabled');
+        msgobs.common.btnAddObs.removeClass('disabled').text(msgobs.options.observersText);
+        break;
       }
     },
 
@@ -1486,18 +1464,36 @@ var msgobs = {
       return recipients;
     },
 
-    clear: function (arr) {
-      $(this.els.recipientList, this.els.dialog).empty();
+    clear: function () {
+      var deleteTokens = conversationsRouter.compose.recipientView.tokens.slice();
+      deleteTokens.forEach(function (tokenId) {
+        conversationsRouter.compose.recipientView._removeToken(tokenId);
+      });
     },
 
-    insert: function (user, observer) {
-      // add a list item, might need to update these classes occasionally.
-      if (observer) {
-        var obj = $('<li class="ac-token" title="Linked to: ' + user.observing + '" data-type="observer" style="background-color:' + msgobs.options.colour + '; border-color: rgba(0,0,0,0.10);">' + user.name + '<a href="#" class="ac-token-remove-btn"><i class="icon-x icon-messageRecipient--cancel"></i><span class="screenreader-only">Remove recipient ' + user.name + '</span></a><input name="recipients[]" value="' + user.id + '" type="hidden"></li>');
-      } else {
-        var obj = $('<li class="ac-token" data-type="user" style="border-color: rgba(0,0,0,0.10);">' + user.name + '<a href="#" class="ac-token-remove-btn"><i class="icon-x icon-messageRecipient--cancel"></i><span class="screenreader-only">Remove recipient ' + user.name + '</span></a><input name="recipients[]" value="' + user.id + '" type="hidden"></li>');
-      }
-      $(this.els.recipientList, this.els.dialog).append(obj);
+    insert: function (users, observers) {
+      users.forEach(function (user) {
+        window.conversationsRouter.compose.recipientView.setTokens([user.userObj]);
+      });
+      observers.forEach(function (user) {
+        window.conversationsRouter.compose.recipientView.setTokens([user.userObj]);
+      });
+
+      $('.ac-token', this.els.recipientList).each(function (i, el) {
+        observers.forEach(function (user) {
+          if ($('input', el)[0].value === user.id.toString()) {
+            $(el).attr('title', 'Linked to: ' + user.observing)
+              .attr('data-type', 'observer')
+              .attr('style', 'background-color:' + msgobs.options.colour + '; border-color: rgba(0,0,0,0.10);');
+          }
+        });
+
+        users.forEach(function (user) {
+          if ($('input', el)[0].value === user.id.toString()) {
+            $(el).attr('data-type', 'user');
+          }
+        });
+      });
     },
 
     removeStudentsInit: function () {
@@ -1523,97 +1519,97 @@ var msgobs = {
         removal;
 
       switch (this.mode) {
-        case 'user':
-          switch (this.removeStep) {
-            case 1:
-              msgobs.common.notify(msgobs.common.txt.noContextRmv, 'success');
-              // look up user enrolments.
-              if (this.getRecipientIds().length) {
-                msgobs.common.btnAddObs.addClass('disabled');
-                msgobs.common.btnRmvStu.addClass('disabled').text(msgobs.options.busyText);
-                recipients = this.getRecipientIds();
-                var ids = [];
-                recipients.forEach(function (v) {
-                  ids.push(v.id);
-                });
-                msgobs.log('Getting Enrolments for users.');
-                msgobs.common.getEnrolments(ids, 'users', callback);
-              } else {
-                msgobs.common.notify(msgobs.common.txt.noStudentsRmv, 'warning');
-              }
-              break;
-            case 2:
-              // process for enrolment type.
-              msgobs.log('User Enrolments:');
-              msgobs.log(data);
-              recipients = this.getRecipientIds();
-              msgobs.log('Recipient IDs:');
-              msgobs.log(recipients);
-
-              // Where users have a students enrolmentType, queue for removal
-              removal = [];
-              recipients.forEach(function (v) {
-                var enrolmentType = ctx.getEnrolmentStatus(v.id, data);
-                if (enrolmentType.indexOf('StudentEnrollment') !== -1) {
-                  removal.push(v.id);
-                }
-              });
-              // remove matched StudentEnrollment ids.
-              msgobs.log('Matched StudentEnrollment removal IDs:');
-              msgobs.log(removal);
-              this.removeById(removal);
-              msgobs.common.btnRmvStu.removeClass('disabled').text(msgobs.options.removeText);
-              msgobs.common.btnAddObs.removeClass('disabled');
-              break;
+      case 'user':
+        switch (this.removeStep) {
+        case 1:
+          msgobs.common.notify(msgobs.common.txt.noContextRmv, 'success');
+          // look up user enrolments.
+          if (this.getRecipientIds().length) {
+            msgobs.common.btnAddObs.addClass('disabled');
+            msgobs.common.btnRmvStu.addClass('disabled').text(msgobs.options.busyText);
+            recipients = this.getRecipientIds();
+            var ids = [];
+            recipients.forEach(function (v) {
+              ids.push(v.id);
+            });
+            msgobs.log('Getting Enrolments for users.');
+            msgobs.common.getEnrolments(ids, 'users', callback);
+          } else {
+            msgobs.common.notify(msgobs.common.txt.noStudentsRmv, 'warning');
           }
           break;
-        case 'course':
-          switch (this.removeStep) {
-            case 1:
-              // lookup course enrolments.
-              if (this.getRecipientIds().length) {
-                msgobs.common.btnRmvStu.addClass('disabled').text(msgobs.options.busyText);
-                msgobs.common.btnAddObs.addClass('disabled');
-                msgobs.log('Getting Enrolments for users.');
-                msgobs.common.getEnrolments([this.courseID], 'courses', callback);
-              } else {
-                msgobs.common.notify(msgobs.common.txt.noStudentsRmv, 'warning');
-              }
-              // now that I look at this, I think it's missing sections. Probably should fix that soon.
-              break;
-            case 2:
-              msgobs.log('Course Enrolments: ');
-              msgobs.log(data);
-              this.courseEnrolments = data;
-              msgobs.log('Getting course sections:');
-              msgobs.common.getCourseSections(this.courseID, callback);
-              break;
-            case 3:
-              msgobs.log('Course Sections: ');
-              msgobs.log(data);
-              msgobs.common.getEnrolments(data, 'sections', callback);
-              break;
-            case 4:
-              enrolments = this.courseEnrolments.concat(data);
+        case 2:
+          // process for enrolment type.
+          msgobs.log('User Enrolments:');
+          msgobs.log(data);
+          recipients = this.getRecipientIds();
+          msgobs.log('Recipient IDs:');
+          msgobs.log(recipients);
 
-              msgobs.log('All Enrolments: ');
-              msgobs.log(data);
-              recipients = this.getRecipientIds();
-              removal = [];
-              recipients.forEach(function (v) {
-                var enrolmentType = ctx.getEnrolmentStatus(v.id, enrolments);
-                if (enrolmentType.indexOf('StudentEnrollment') !== -1) {
-                  removal.push(v.id);
-                }
-              });
-              msgobs.log('Matched StudentEnrollment removal IDs:');
-              msgobs.log(removal);
-              this.removeById(removal);
-              msgobs.common.btnRmvStu.removeClass('disabled').text(msgobs.options.removeText);
-              msgobs.common.btnAddObs.removeClass('disabled');
-              break;
-          }
+          // Where users have a students enrolmentType, queue for removal
+          removal = [];
+          recipients.forEach(function (v) {
+            var enrolmentType = ctx.getEnrolmentStatus(v.id, data);
+            if (enrolmentType.indexOf('StudentEnrollment') !== -1) {
+              removal.push(v.id);
+            }
+          });
+          // remove matched StudentEnrollment ids.
+          msgobs.log('Matched StudentEnrollment removal IDs:');
+          msgobs.log(removal);
+          this.removeById(removal);
+          msgobs.common.btnRmvStu.removeClass('disabled').text(msgobs.options.removeText);
+          msgobs.common.btnAddObs.removeClass('disabled');
           break;
+        }
+        break;
+      case 'course':
+        switch (this.removeStep) {
+        case 1:
+          // lookup course enrolments.
+          if (this.getRecipientIds().length) {
+            msgobs.common.btnRmvStu.addClass('disabled').text(msgobs.options.busyText);
+            msgobs.common.btnAddObs.addClass('disabled');
+            msgobs.log('Getting Enrolments for users.');
+            msgobs.common.getEnrolments([this.courseID], 'courses', callback);
+          } else {
+            msgobs.common.notify(msgobs.common.txt.noStudentsRmv, 'warning');
+          }
+          // now that I look at this, I think it's missing sections. Probably should fix that soon.
+          break;
+        case 2:
+          msgobs.log('Course Enrolments: ');
+          msgobs.log(data);
+          this.courseEnrolments = data;
+          msgobs.log('Getting course sections:');
+          msgobs.common.getCourseSections(this.courseID, callback);
+          break;
+        case 3:
+          msgobs.log('Course Sections: ');
+          msgobs.log(data);
+          msgobs.common.getEnrolments(data, 'sections', callback);
+          break;
+        case 4:
+          var enrolments = this.courseEnrolments.concat(data);
+
+          msgobs.log('All Enrolments: ');
+          msgobs.log(data);
+          recipients = this.getRecipientIds();
+          removal = [];
+          recipients.forEach(function (v) {
+            var enrolmentType = ctx.getEnrolmentStatus(v.id, enrolments);
+            if (enrolmentType.indexOf('StudentEnrollment') !== -1) {
+              removal.push(v.id);
+            }
+          });
+          msgobs.log('Matched StudentEnrollment removal IDs:');
+          msgobs.log(removal);
+          this.removeById(removal);
+          msgobs.common.btnRmvStu.removeClass('disabled').text(msgobs.options.removeText);
+          msgobs.common.btnAddObs.removeClass('disabled');
+          break;
+        }
+        break;
       }
     },
 
@@ -1742,45 +1738,45 @@ var msgobs = {
       };
 
       switch (this.step) {
-        case 1:
-          this.removeObservers(); // cleanup previously inserted observers
+      case 1:
+        this.removeObservers(); // cleanup previously inserted observers
 
-          // swap buttons to prevent Canvas actions on send click.
-          msgobs.gradebook.els.btnCanvasSend.remove();
-          msgobs.gradebook.els.btnContainer.append(msgobs.gradebook.els.btnMsgobsSend);
-          msgobs.common.btnAddObs.addClass('disabled').text(msgobs.options.busyText);
-          msgobs.common.btnRmvStu.addClass('disabled');
-          if (!this.getStudentList().length) { //  no studetns
-            msgobs.common.notify(msgobs.common.txt.noStudents, 'warning');
-            msgobs.common.btnAddObs.removeClass('disabled').text(msgobs.options.observersText);
-          } else {
-            // Get course enrolments.
-            msgobs.log('Course: ' + this.courseId);
-            msgobs.common.getEnrolments([this.courseId], 'courses', callback);
-          }
-          break;
-        case 2:
-          // store result of enrolments, get sections of present course.
-          msgobs.log('Course Enrolments: ');
-          msgobs.log(data);
-          // finalise the process
-
-          // concanentate earlier course enrolments with section enrolments.
-          var courseEnrolments = data;
-          // match student names to ids. Vulnerable to identical names.
-          var studentIds = this.getStudentIds(this.getStudentList(), courseEnrolments);
-          msgobs.log('Student IDs: ');
-          msgobs.log(studentIds);
-          // Match user's observing ids to student ids
-          var observerIds = msgobs.common.getMatchedObservers(studentIds, courseEnrolments);
-          msgobs.log('Matched observers: ');
-          msgobs.log(observerIds);
-          // insert the tokens to the ui, complete process with feedback.
-          this.insert(observerIds);
+        // swap buttons to prevent Canvas actions on send click.
+        msgobs.gradebook.els.btnCanvasSend.remove();
+        msgobs.gradebook.els.btnContainer.append(msgobs.gradebook.els.btnMsgobsSend);
+        msgobs.common.btnAddObs.addClass('disabled').text(msgobs.options.busyText);
+        msgobs.common.btnRmvStu.addClass('disabled');
+        if (!this.getStudentList().length) { //  no studetns
+          msgobs.common.notify(msgobs.common.txt.noStudents, 'warning');
           msgobs.common.btnAddObs.removeClass('disabled').text(msgobs.options.observersText);
-          msgobs.common.btnRmvStu.removeClass('disabled');
-          msgobs.common.notify(msgobs.common.txt.addObsSuccess, 'success');
-          break;
+        } else {
+          // Get course enrolments.
+          msgobs.log('Course: ' + this.courseId);
+          msgobs.common.getEnrolments([this.courseId], 'courses', callback);
+        }
+        break;
+      case 2:
+        // store result of enrolments, get sections of present course.
+        msgobs.log('Course Enrolments: ');
+        msgobs.log(data);
+        // finalise the process
+
+        // concanentate earlier course enrolments with section enrolments.
+        var courseEnrolments = data;
+        // match student names to ids. Vulnerable to identical names.
+        var studentIds = this.getStudentIds(this.getStudentList(), courseEnrolments);
+        msgobs.log('Student IDs: ');
+        msgobs.log(studentIds);
+        // Match user's observing ids to student ids
+        var observerIds = msgobs.common.getMatchedObservers(studentIds, courseEnrolments);
+        msgobs.log('Matched observers: ');
+        msgobs.log(observerIds);
+        // insert the tokens to the ui, complete process with feedback.
+        this.insert(observerIds);
+        msgobs.common.btnAddObs.removeClass('disabled').text(msgobs.options.observersText);
+        msgobs.common.btnRmvStu.removeClass('disabled');
+        msgobs.common.notify(msgobs.common.txt.addObsSuccess, 'success');
+        break;
       }
     },
 
@@ -1803,7 +1799,7 @@ var msgobs = {
       // returns student ids from students names matched with ids found in enrolment data
       var ids = [];
       studentNames.forEach(function (studentName) {
-        enrolments.forEach(function (enrolment, i) {
+        enrolments.forEach(function (enrolment) {
           if (enrolment.user.name == studentName.name) {
             ids.push({
               id: enrolment.user.id,
@@ -1851,7 +1847,7 @@ var msgobs = {
       // return list of recipient items from student list element.
       var recipients = [];
       $('li', msgobs.gradebook.els.studentList).each(function () {
-        el = $(this);
+        var  el = $(this);
         // if the item is displayed, it should be part of the message recipients.
         if (el.attr('style').indexOf('list-item') !== -1) {
           recipients.push(el.attr('data-id'));
@@ -1971,7 +1967,7 @@ var msgobs = {
   },
 
   logItems: [],
-  log: function (msg, warn, err) {
+  log: function (msg) {
     var date = new Date();
 
     function zero (str) {
@@ -1980,14 +1976,14 @@ var msgobs = {
         str;
     } // derp. no idea how to use dates.
 
-    stamp = '[' + zero(date.getHours()) + ':' + zero(date.getMinutes()) + ':' + zero(date.getSeconds()) + '] ';
+    var stamp = '[' + zero(date.getHours()) + ':' + zero(date.getMinutes()) + ':' + zero(date.getSeconds()) + '] ';
     if (msgobs.options.log) {
       console.log(stamp + JSON.stringify(msg));
     }
     this.logItems.push(stamp + JSON.stringify(msg));
   },
   applog: function () {
-    console.dir(logitems);
+    console.dir(this.logitems);
   }
 };
 
@@ -1995,6 +1991,7 @@ $(document).ready(function () {
   msgobs.init();
 });
 
+//end Include Observers
 
 //Atomic Search -- Code for search widget -- 2/1/2019
 var atomicSearchConfig = {
@@ -2013,3 +2010,357 @@ document.getElementsByTagName("head")[0].appendChild(atomicSearchWidgetScript);
 if(	$.inArray('admin', ENV['current_user_roles']) > -1 || $.inArray('teacher', ENV['current_user_roles']) > -1){
    $('#context_external_tool_55733_menu_item').show();
 };
+
+
+//-------10/20/2020-----------------BETA-------------------------
+//script to populate missing workfunction Student(id) 
+/* Strip the while(1) prefix from API responses. We are not embedding
+ * content directly, so let's manipulate as needed.
+ */
+ BASE_URL = "https://hcpss.instructure.com/api/v1";
+
+ 
+ 
+function Student(id) {
+    this.id = id;
+}
+
+/* Strip the while(1) prefix from API responses. We are not embedding
+ * content directly, so let's manipulate as needed.
+ */
+function unpackAPIResponse(response) {
+    return JSON.parse(response.replace('while(1);', ''));
+}
+
+/* Parse out the link field in a response header.
+ * Returns an object with current, next, last, and first elements
+ */
+function parseLinkHeader(linkHeader) {
+    var pages = {};
+
+    if (linkHeader == null)
+        return pages;
+    
+    var links = linkHeader.split(",");
+    
+    for (var i = 0; i < links.length; i++) {
+        let m = links[i].match(/<(https:.*)>.*rel="(.*)"/);
+        let rel = m[2];
+        let page = m[1];
+        pages[rel] = page;
+    }
+
+    return pages
+}
+
+/* Utility function to inspect access_restricted_by_date property.
+ *
+ * @TODO: Validation checks.
+ * @TODO: Inline?
+ */
+function filterInactiveClasses(classList) {
+    return classList.filter(course => !('access_restricted_by_date' in course));
+}
+
+/* Utility function to fetch paginated API responses by inspecting the next link
+ * and aggregating all results.
+ *
+ * returns all responses across all pages.
+ *
+ * @TODO: This could potentially cause issues for large responses.
+ */
+async function getAllResponses(url) {
+    let allResponses = await fetch(url).then(async function(response) {
+        let results = await response.text().then(unpackAPIResponse);
+        links = parseLinkHeader(response.headers.get("link"));
+        while ("next" in links) {
+            let nextResponse = await fetch(links["next"]);
+            let newResults = await nextResponse.text().then(unpackAPIResponse);
+            if (Object.keys(newResults).length == 0) {
+                break;
+            }
+            links = parseLinkHeader(nextResponse.headers.get("link"));
+            results = results.concat(newResults);
+        }
+        return results;
+    });;
+
+    return allResponses;
+}
+
+/* Given a student and a course object, fetch all assignments with unsubmitted
+ * submissions.
+ *
+ * Return list of assignments.
+ *
+ * @TODO: Make the filter optional
+ * @TODO: Support additional filter types
+ * @TODO: Investigate API. The include[] field ought to do what we need.
+ */
+async function getAllAssignmentsForCourse(student, course) {
+    
+    let url = BASE_URL + `/users/${student.id}/courses/${course['id']}/` + 
+        "assignments?page=1&per_page=10";
+
+    let assignments = await getAllResponses(url);
+	//define date range parameters
+	//let today = new Date();
+	let thirtyDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30));
+	let nextWeek = new Date(new Date().setDate(new Date().getDate() + 7 ));
+	//end date range defs
+    
+    assignments = assignments.filter(as => (as.due_at != null) &&
+       // (Date.now() > new Date(as["due_at"])));
+		//update &&
+		(new Date(as["due_at"])>thirtyDaysAgo)&&
+		(new Date(as["due_at"])<nextWeek));
+
+    for (let j = 0; j < assignments.length; j++) {
+        let assignment = assignments[j];
+        
+        let submissionUrl = BASE_URL + `/courses/${course["id"]}/assignments/` +
+            `${assignment["id"]}/submissions/${student.id}`;
+        let submissions = await getAllResponses(submissionUrl);
+        assignment["submission"] = submissions;
+		console.log(assignment.name + " " + assignment.submission["workflow_state"] + " " +assignment.submission["grade"] )
+    }
+    let unsubmitted = assignments.filter(
+        // Only select assignments that have unsubmitted submissions and exclude assignments that are "not for a grade"
+        assignment => (assignment.submission["workflow_state"] == "unsubmitted") &&
+		(assignment.grading_type != "not_graded")
+		
+    );
+    // How much do we trust the API to order these assignments?
+    return unsubmitted.sort((a,b) => new Date(a.due_at) - new Date(b.due_at));
+}
+
+/* Given a list of assignments, convert them to pretty HTML and
+ * populate the listElement with each assignment.
+ */
+function renderUnsubmittedAssignmentList(assignments, listElement) {
+    for (let i = 0; i < assignments.length; i++) {
+        let assignment = assignments[i];
+
+        /*
+         * This code sets up the following structure.
+         * <li>
+         *     <a href=[Assignment URL]>Assignment</a>
+         *     <p>Due at [Due Date]</p>
+         * </li>
+         *
+         * This list item is appended to the listElement which is an unordered
+         * list.
+         */
+        let item = document.createElement("li");
+		item.setAttribute("class","unsubmitted");
+        let assignmentLink = document.createElement("a");
+        let dueDate = document.createElement("p");
+		dueDate.setAttribute("class","unsubmittedDate");
+        
+        assignmentLink.setAttribute("href", `${assignment["html_url"]}`);
+        assignmentLink.innerHTML = assignment.name;
+
+        let due = new Date(assignment["due_at"]);
+        let hour = due.getHours();
+        let period = "AM";
+        if (hour >= 12) {
+            period = "PM";
+            if (hour > 12)
+                hour = hour % 12;
+        }
+        let minutes = due.getMinutes();
+        if (minutes < 10) {
+            minutes = "0"+minutes;
+        }
+        dueDate.innerHTML = `Due on ${due.toDateString()} at ${hour}:${minutes} ${period}`;
+        item.appendChild(assignmentLink);
+        item.appendChild(dueDate);
+        item.className = assignment["due_at"];
+
+        listElement.append(item);
+    }
+
+}
+
+/* Fetch all assignments for a student across all active courses and populate
+ * studentElement with a list of outstanding assignments
+ */
+async function fetchAllAssignments(student, studentElement) {
+    let url = BASE_URL + `/users/${student.id}/courses?page=1&per_page=10`;
+    
+    let courses = await getAllResponses(url).then(filterInactiveClasses);
+
+    for (let i = 0; i < courses.length; i++) {
+        let course = courses[i];
+        
+        /*
+         * This code sets up the following structure. The unordered list element
+         * is then updated as assignments are collected.
+         * <div>
+         *   <a href=/courses/[course id]><h2>Course Name</h2></a>
+         *   <ul>
+         *   </ul>
+         * </div>
+         */
+        let container = document.createElement("div");
+        container.style = "display:none";
+        let headerLink = document.createElement("a");
+        headerLink.setAttribute("href", `/courses/${course["id"]}/grades`);
+
+        let header = document.createElement("h3");
+        header.innerHTML = course["name"];
+        headerLink.appendChild(header);
+
+        container.appendChild(headerLink);
+        let list = document.createElement("ul");
+        
+        container.appendChild(list);
+        studentElement.appendChild(container);
+
+        getAllAssignmentsForCourse(student, course).then(function (assignments) {
+            if (assignments.length > 0) {
+                container.style = "";
+            }
+            renderUnsubmittedAssignmentList(assignments, list);
+        });
+
+    }
+}
+
+// Keep retrying for 5 minutes
+const maxWaitForLoad = 5*60*1000;
+
+var timeSpentWaitingForLoad = 0;
+
+/* Wait for the side-bar to load before attempting to modify it. */
+function waitForLoad () {
+    /* @TODO: This is one of the most brittle part of the whole thing.
+     * Make this a bit more stable.
+     */
+    const el = document.getElementsByClassName("events_list");
+
+    if (el.length) {
+        populateAssignments();
+    }
+    else {
+        if (timeSpentWaitingForLoad < maxWaitForLoad) {
+            timeSpentWaitingForLoad += 300;
+            setTimeout(waitForLoad, 300); // try again in 300 milliseconds
+        }
+        else {
+            if(DEBUG) console.log("Timeout out...");
+        }
+    }
+}
+
+/*
+ * Add all the assignments for a given student to the listElement containing
+ * assignments for all students.
+ *
+ * id can be a numeric ID or "self" as per the v1 API specification
+ */
+async function addStudentAssignments(id, displayName, listElement) {
+    let container = document.createElement("div");
+	container.setAttribute("class", "unsubmitted");
+    let header = document.createElement("h2");
+    header.innerHTML = `${displayName} Unsubmitted Assignments`;
+    container.appendChild(header);
+    listElement.appendChild(container);
+    fetchAllAssignments(new Student(id), container);
+}
+
+async function populateAssignments() {
+
+	//prettify the banner later
+    //var assignmentContainer = document.getElementById("wiki_page_show");
+	var assignmentContainer = document.getElementById("audraTest");
+	var banner = document.createElement("div");
+	banner.setAttribute("class", "unsubmitted");
+	var bannerText = document.createElement("p");
+	bannerText.innerHTML = 'Please allow a moment for assignments to load. The unsubmitted assignment list includes assignments due in the past 30 days and within the next week. Assignments that have been graded and  assignments that have been marked "not for a grade" are excluded from the list. Work submitted outside of Canvas, such as tasks during virutal meetings or work submitted to 3rd party applications (examples: Dreambox, Flipgrid, Actively Learn), may not be recognized as submitted and could appear in the list below. Click the course title to navigate to the complete grade page for the course.';
+	banner.appendChild(bannerText);
+	assignmentContainer.appendChild(banner);
+
+    let url = `${BASE_URL}/users/self/observees`;
+    
+    // Query API for all observees
+    // The assumption here is that students will not have observees
+    // This could be an invalid assumption though.
+    let observees = await fetch(url).then(async function(res) {
+        let obs = await res.text().then(unpackAPIResponse);
+        return obs;
+    });
+
+    if (observees.length > 0)
+    {
+        for (let i = 0; i < observees.length; i++)
+        {
+            addStudentAssignments(observees[i].id, `${observees[i].name}'s`, assignmentContainer);
+        }
+    }
+    else
+    {
+        // We're a student
+        addStudentAssignments("self", "My", assignmentContainer);
+    }
+    
+}
+
+// Start unsubmitted assignment list when Grade overview page is opened
+$(document).ready(function () {
+	if(document.location.href == "https://hcpss.instructure.com/courses/150689")
+	{	
+	populateAssignments();
+}});
+
+//1/12/2021--Add function to sort observee list on Grades screen
+$(document).ready(function () {
+	if(document.location.href == "https://hcpss.instructure.com/grades"&&ENV.current_user_roles.includes("observer")){
+		  const checkIfNull = async selector => {
+    while (document.querySelector(selector) === null) {
+      await new Promise(resolve => requestAnimationFrame(resolve));
+    }
+    return document.querySelector(selector);
+  };
+
+  checkIfNull("table.course_details.observer_grades").then(() => {
+        let table,
+          rows,
+          switching,
+          i,
+          thisRow,
+          nextRow,
+          shouldSwitch,
+          percentColumn;
+        table = document.querySelector("table.course_details.observer_grades");
+        percentColumn = document.querySelectorAll("td.percent");
+/*         percentColumn.forEach(one => {
+          if (one.innerText === "no grade") {
+            one.parentNode.style.display = "none";
+          }
+        }); */
+        switching = true;
+        while (switching) {
+          switching = false;
+          rows = table.rows;
+          for (i = 0; i < rows.length; i++) {
+            shouldSwitch = false;
+            thisRow = rows[i].querySelectorAll("td")[0];
+            if (i !== rows.length - 1) {
+              nextRow = rows[i + 1].querySelectorAll("td")[0];
+            }
+            if (
+              thisRow.innerText.toLowerCase() > nextRow.innerText.toLowerCase()
+            ) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+          if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+          }
+        }
+  });
+	}
+});

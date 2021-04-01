@@ -17,58 +17,58 @@
 /* Font definitions for Arimo and Roboto, which are used in the content area */
 @font-face {
   font-family: 'Arimo';
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Regular-webfont.eot");
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Regular-webfont.woff2") format("woff2"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Regular-webfont.woff") format("woff"), url("https://https://hcpss.s3.amazonaws.com/Fonts/Arimo-Regular-webfont.ttf") format("truetype"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Regular-webfont.svg#arimoregular") format("svg");
+  src: url("https://canvas-assets.hcpss.org/Fonts/Arimo-Regular-webfont.eot");
+  src: url("https://canvas-assets.hcpss.org/Fonts/Arimo-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Regular-webfont.woff2") format("woff2"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Regular-webfont.woff") format("woff"), url("https://https://canvas-assets.hcpss.org/Fonts/Arimo-Regular-webfont.ttf") format("truetype"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Regular-webfont.svg#arimoregular") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Arimo';
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Bold-webfont.eot");
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Bold-webfont.woff2") format("woff2"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Bold-webfont.woff") format("woff"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Bold-webfont.ttf") format("truetype"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Bold-webfont.svg#arimobold") format("svg");
+  src: url("https://canvas-assets.hcpss.org/Fonts/Arimo-Bold-webfont.eot");
+  src: url("https://canvas-assets.hcpss.org/Fonts/Arimo-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Bold-webfont.woff2") format("woff2"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Bold-webfont.woff") format("woff"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Bold-webfont.ttf") format("truetype"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Bold-webfont.svg#arimobold") format("svg");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'Arimo';
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-BoldItalic-webfont.eot");
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-BoldItalic-webfont.eot?#iefix") format("embedded-opentype"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-BoldItalic-webfont.woff2") format("woff2"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-BoldItalic-webfont.woff") format("woff"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-BoldItalic-webfont.ttf") format("truetype"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-BoldItalic-webfont.svg#arimobold_italic") format("svg");
+  src: url("https://canvas-assets.hcpss.org/Fonts/Arimo-BoldItalic-webfont.eot");
+  src: url("https://canvas-assets.hcpss.org/Fonts/Arimo-BoldItalic-webfont.eot?#iefix") format("embedded-opentype"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-BoldItalic-webfont.woff2") format("woff2"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-BoldItalic-webfont.woff") format("woff"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-BoldItalic-webfont.ttf") format("truetype"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-BoldItalic-webfont.svg#arimobold_italic") format("svg");
   font-weight: bold;
   font-style: italic;
 }
 @font-face {
   font-family: 'Arimo';
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Italic-webfont.eot");
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Italic-webfont.eot?#iefix") format("embedded-opentype"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Italic-webfont.woff2") format("woff2"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Italic-webfont.woff") format("woff"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Italic-webfont.ttf") format("truetype"), url("https://hcpss.s3.amazonaws.com/Fonts/Arimo-Italic-webfont.svg#arimoitalic") format("svg");
+  src: url("https://canvas-assets.hcpss.org/Fonts/Arimo-Italic-webfont.eot");
+  src: url("https://canvas-assets.hcpss.org/Fonts/Arimo-Italic-webfont.eot?#iefix") format("embedded-opentype"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Italic-webfont.woff2") format("woff2"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Italic-webfont.woff") format("woff"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Italic-webfont.ttf") format("truetype"), url("https://canvas-assets.hcpss.org/Fonts/Arimo-Italic-webfont.svg#arimoitalic") format("svg");
   font-weight: normal;
   font-style: italic;
 }
 @font-face {
   font-family: 'roboto_condensed';
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Bold-webfont.eot");
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Bold-webfont.woff2") format("woff2"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Bold-webfont.woff") format("woff"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Bold-webfont.ttf") format("truetype"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Bold-webfont.svg#roboto_condensedbold") format("svg");
+  src: url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Bold-webfont.eot");
+  src: url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Bold-webfont.woff2") format("woff2"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Bold-webfont.woff") format("woff"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Bold-webfont.ttf") format("truetype"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Bold-webfont.svg#roboto_condensedbold") format("svg");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'roboto_condensed';
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Regular-webfont.eot");
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Regular-webfont.woff2") format("woff2"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Regular-webfont.woff") format("woff"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Regular-webfont.ttf") format("truetype"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Regular-webfont.svg#roboto_condensedregular") format("svg");
+  src: url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Regular-webfont.eot");
+  src: url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Regular-webfont.woff2") format("woff2"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Regular-webfont.woff") format("woff"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Regular-webfont.ttf") format("truetype"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Regular-webfont.svg#roboto_condensedregular") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'roboto_condensedlight';
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Light-webfont.eot");
-  src: url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Light-webfont.eot?#iefix") format("embedded-opentype"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Light-webfont.eotwoff2") format("woff2"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Light-webfont.woff") format("woff"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Light-webfont.ttf") format("truetype"), url("https://hcpss.s3.amazonaws.com/Fonts/RobotoCondensed-Light-webfont.svg#roboto_condensedlight") format("svg");
+  src: url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Light-webfont.eot");
+  src: url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Light-webfont.eot?#iefix") format("embedded-opentype"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Light-webfont.eotwoff2") format("woff2"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Light-webfont.woff") format("woff"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Light-webfont.ttf") format("truetype"), url("https://canvas-assets.hcpss.org/Fonts/RobotoCondensed-Light-webfont.svg#roboto_condensedlight") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face{
 	font-family:'FontAwesome';
-	src:url('https://hcpss.s3.amazonaws.com/Fonts/fontawesome-webfont.eot');
-	src:url('https://hcpss.s3.amazonaws.com/Fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),url('https://hcpss.s3.amazonaws.com/Fonts/fontawesome-webfont.woff2') format('woff2'),url('https://hcpss.s3.amazonaws.com/Fonts/fontawesome-webfont.woff') format('woff'),url('https://hcpss.s3.amazonaws.com/Fonts/fontawesome-webfont.ttf') format('truetype'),url('https://hcpss.s3.amazonaws.com/Fonts/fontawesome-webfont.svg#fontawesomeregular') format('svg');
+	src:url('https://canvas-assets.hcpss.org/Fonts/fontawesome-webfont.eot');
+	src:url('https://canvas-assets.hcpss.org/Fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),url('https://canvas-assets.hcpss.org/Fonts/fontawesome-webfont.woff2') format('woff2'),url('https://canvas-assets.hcpss.org/Fonts/fontawesome-webfont.woff') format('woff'),url('https://canvas-assets.hcpss.org/Fonts/fontawesome-webfont.ttf') format('truetype'),url('https://canvas-assets.hcpss.org/Fonts/fontawesome-webfont.svg#fontawesomeregular') format('svg');
 	font-weight:normal;
 	font-style:normal;
 }
@@ -133,16 +133,16 @@
 }
 #extra-nav li .ui-icon-extlink { display: none; }
 #link-synergy {
-  background-image: url("https://hcpss.s3.amazonaws.com/CanvasImages/hcpss-synergy.jpg");
+  background-image: url("https://canvas-assets.hcpss.org/CanvasImages/hcpss-synergy.jpg");
   background-size: 47px 40px;
 }
 #link-orientation  {
-  background-image: url("https://hcpss.s3.amazonaws.com/CanvasImages/hcpss-orientation.png");
+  background-image: url("https://canvas-assets.hcpss.org/CanvasImages/hcpss-orientation.png");
   background-size: 39px 40px;
 }
 #link-parent-dashboard {
   width: auto;
-  background-image: url("https://hcpss.s3.amazonaws.com/CanvasImages/hcpss-parent.png");
+  background-image: url("https://canvas-assets.hcpss.org/CanvasImages/hcpss-parent.png");
   background-size: 40px 40px;
 }
 

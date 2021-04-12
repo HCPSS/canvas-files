@@ -2364,3 +2364,18 @@ $(document).ready(function () {
   });
 	}
 });
+
+//add what's this link next to Pronouns on the course settings screen
+$(document).ready(function () {
+	if(document.location.href == "https://hcpss.instructure.com/profile/settings"){
+		var pronoun = document.querySelectorAll('[for="user_pronouns"]');
+		var a = document.createElement("a");
+		var link = document.createTextNode(" What's This?");
+
+		a.appendChild(link);
+		a.title = "Pronouns"
+		a.href = "https://hcpss.instructure.com/courses/9495/pages/pronouns"
+		pronoun[0].append(a);
+
+	}
+});

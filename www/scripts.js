@@ -2379,3 +2379,15 @@ $(document).ready(function () {
 
 	}
 });
+
+//7/16/2021: In the Canvas for Elementary UI rename "homeroom" tab to "Home"
+//Rename the "Home" icon in the global nav "Dashboard" to maintain consistency with classic canvas
+$(document).ready(function () {
+var homeroomButton = document.getElementById('global_nav_dashboard_link');
+var homeroomLabel = homeroomButton.querySelector("div.menu-item__text");
+homeroomLabel.innerHTML = "Dashboard";
+
+var homeroomTab = document.getElementById('tab-tab-homeroom');
+console.log(homeroomTab);
+homeroomTab.innerHTML = "<span class'ic-Dashboard-tabs__tab selected'><svg name='IconHome' viewBox='0 0 1920 1920' rotate='0' width='1em' height='1em' aria-hidden='true' role='presentation' focusable='false' class='esvoZ_bGBk esvoZ_drOs esvoZ_eXrk cGqzL_bGBk' style='width: 1em; height: 1em;'><g role='presentation'><path d='M960.160167,0 L28,932.160167 L107.000407,1010.93741 L960.160167,157.777649 L1813.31993,1010.93741 L1892.20875,932.160167 L960.160167,0 Z M1573.85273,1027.34004 L1573.85273,1808.4175 L1238.99367,1808.4175 L1238.99367,1250.50503 L681.19277,1250.50503 L681.19277,1808.4175 L346.445284,1808.4175 L346.445284,1027.34004 L234.751206,1027.34004 L234.751206,1920 L681.19277,1920 L1238.99367,1920 L1685.43523,1920 L1685.43523,1027.34004 L1573.85273,1027.34004 Z M1127.52275,1362.08752 L1127.52275,1808.52909 L792.775266,1808.52909 L792.775266,1362.08752 L1127.52275,1362.08752 Z M960.126693,692.603708 C1021.72023,692.603708 1071.70919,742.592666 1071.70919,804.186203 C1071.70919,865.779741 1021.72023,915.768699 960.126693,915.768699 C898.533155,915.768699 848.544197,865.779741 848.544197,804.186203 C848.544197,742.592666 898.533155,692.603708 960.126693,692.603708 Z M1183.29168,804.186203 C1183.29168,681.110711 1083.20219,581.021212 960.126693,581.021212 C837.0512,581.021212 736.961702,681.110711 736.961702,804.186203 C736.961702,927.261696 837.0512,1027.35119 960.126693,1027.35119 C1083.20219,1027.35119 1183.29168,927.261696 1183.29168,804.186203' fill-rule='evenodd' stroke='none' stroke-width='1'></path></g></svg>Home</span>";
+});
